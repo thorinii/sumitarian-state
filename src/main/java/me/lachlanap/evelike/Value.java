@@ -26,6 +26,7 @@ public class Value {
     this.intValue = intValue;
   }
 
+
   @Override
   public String toString() {
     switch (type) {
@@ -34,7 +35,18 @@ public class Value {
       case INTEGER:
         return Integer.toString(intValue);
       default:
-        return "?";
+        return "???";
+    }
+  }
+
+  public String toHumanString() {
+    switch (type) {
+      case STRING:
+        return stringValue;
+      case INTEGER:
+        return Integer.toString(intValue);
+      default:
+        return "???";
     }
   }
 }

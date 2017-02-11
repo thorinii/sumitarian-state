@@ -34,7 +34,7 @@ public class Record {
     for (Map.Entry<String, Value> entry : values.entrySet()) {
       if (!first) builder.append(" ");
       first = false;
-      builder.append(entry.getKey()).append(":").append(entry.getValue());
+      builder.append('#').append(entry.getKey()).append(':').append(entry.getValue());
     }
     builder.append('}');
     return builder.toString();

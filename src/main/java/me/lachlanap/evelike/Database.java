@@ -22,4 +22,8 @@ public class Database {
   public Iterable<Record> queryForAll() {
     return records;
   }
+
+  public String getName() {
+    return name;
+  }
 }
