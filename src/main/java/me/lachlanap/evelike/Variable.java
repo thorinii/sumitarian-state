@@ -1,8 +1,11 @@
 package me.lachlanap.evelike;
 
+import lombok.Data;
+
 /**
  * Represents the identity of a local variable.
  */
+@Data
 public class Variable {
   private final String name;
   private final Type type;

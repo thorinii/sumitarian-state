@@ -57,12 +57,13 @@ public class Main {
     container.addBlock(Block.builder()
         .bind(peopleOlderThanTwenty, Query.builder(people).greaterThan("age", 20).build())
         .forAll(peopleOlderThanTwenty, person)
-        .print(context -> "Max age: " + context.getRecord(person).toString())
+        .print(context -> context.getRecord(person).toString())
         .build()
         .build());
 
 
     System.out.println("Container Dump:\n" + container);
+    container.saveAndShutdown();
 
     /*
       count all names
@@ -82,23 +83,5 @@ public class Main {
         forall people-older-than-twenty person
           print person
      */
-  }
-
-  public static class Block {
-    public static Code.Builder<Block> builder() {
-      return new Code.Builder<>(Block::new);
-    }
-
-    private final Code code;
-
-    public Block(Code code) {
-      this.code = code;
-    }
-
-    @Override
-    public String toString() {
-      return code.toString();
-    }
-
   }
 }

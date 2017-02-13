@@ -10,13 +10,15 @@ import java.util.Map;
  */
 public class Container {
   private final List<Database> databases;
-  private final List<Main.Block> blocks;
+  private final List<Block> blocks;
   private final Map<String, Database> databaseByName;
+  private final Scheduler scheduler;
 
   public Container() {
     this.databases = new ArrayList<>();
     this.blocks = new ArrayList<>();
     this.databaseByName = new HashMap<>();
+    this.scheduler = new Scheduler(this);
   }
 
   public Database database(String name) {
@@ -29,8 +31,9 @@ public class Container {
     return database;
   }
 
-  public void addBlock(Main.Block block) {
+  public void addBlock(Block block) {
     blocks.add(block);
+    scheduler.scheduleNewBlock(block);
   }
 
   @Override
@@ -46,10 +49,14 @@ public class Container {
     }
 
     builder.append("Blocks:\n");
-    for (Main.Block block : blocks) {
+    for (Block block : blocks) {
       builder.append(StringUtils.indent(block.toString())).append("\n");
     }
 
     return builder.toString();
+  }
+
+  public void saveAndShutdown() {
+    scheduler.executeAllAndShutdown();
   }
 }
