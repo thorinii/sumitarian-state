@@ -37,19 +37,19 @@ public class Main {
 
     Variable numberOfPeople = new Variable("number-of-people", Type.INTEGER);
     container.addBlock(Block.builder()
-        .bind(numberOfPeople, FunctionCall.of("count", people))
+        .bind(numberOfPeople, FunctionCall.of("count", new Expression.DatabaseReference(people)))
         .print(context -> "Number of people: " + context.getValue(numberOfPeople).toHumanString())
         .build());
 
     Variable numberOfSurnames = new Variable("number-of-people", Type.INTEGER);
     container.addBlock(Block.builder()
-        .bind(numberOfSurnames, FunctionCall.of("count", Projection.of(people, "last-name")))
+        .bind(numberOfSurnames, FunctionCall.of("count", Projection.of(new Expression.DatabaseReference(people), "last-name")))
         .print(context -> "Number of surnames: " + context.getValue(numberOfSurnames).toHumanString())
         .build());
 
     Variable maxAge = new Variable("max-age", Type.INTEGER);
     container.addBlock(Block.builder()
-        .bind(maxAge, FunctionCall.of("max", people, "last-name"))
+        .bind(maxAge, FunctionCall.of("max", new Expression.DatabaseReference(people), Value.of("age")))
         .print(context -> "Max age: " + context.getValue(maxAge).toHumanString())
         .build());
 

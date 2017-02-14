@@ -3,18 +3,21 @@ package me.lachlanap.evelike;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * Created by lachlan on 11/02/2017.
  */
-public class FunctionCall {
-  public static FunctionCall of(String function, Object... arguments) {
+@Getter
+public class FunctionCall extends Expression {
+  public static FunctionCall of(String function, Expression... arguments) {
     return new FunctionCall(function, Arrays.asList(arguments));
   }
 
   private final String function;
-  private final List<Object> arguments;
+  private final List<Expression> arguments;
 
-  public FunctionCall(String function, List<Object> arguments) {
+  public FunctionCall(String function, List<Expression> arguments) {
     this.function = function;
     this.arguments = arguments;
   }

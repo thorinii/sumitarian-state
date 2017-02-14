@@ -14,7 +14,7 @@ public abstract class Statement {
   @Getter
   public static class Binding extends Statement {
     public static Binding ofRecordSet(Variable variable, Database database) {
-      return new Binding(variable, database);
+      return new Binding(variable, new Expression.DatabaseReference(database));
     }
 
     public static Binding ofRecordSet(Variable variable, Query query) {
@@ -26,16 +26,16 @@ public abstract class Statement {
     }
 
     private final Variable variable;
-    private final Object target;
+    private final Expression expression;
 
-    private Binding(Variable variable, Object target) {
+    private Binding(Variable variable, Expression expression) {
       this.variable = variable;
-      this.target = target;
+      this.expression = expression;
     }
 
     @Override
     public String toString() {
-      return variable + " = " + target;
+      return variable + " = " + expression;
     }
   }
 

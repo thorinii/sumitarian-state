@@ -49,11 +49,30 @@ public class Context {
     }
   }
 
+  public Iterable<Record> getRecordSet(Variable variable) {
+    Object thing = thingMap.get(variable);
+    if (thing == null) {
+      if (parent == null) {
+        throw new IllegalArgumentException("Unknown variable: " + variable);
+      } else {
+        return parent.getRecordSet(variable);
+      }
+    } else if (thing instanceof Iterable) {
+      return (Iterable<Record>) thing;
+    } else {
+      throw new IllegalArgumentException("Variable: " + variable + " is not bound to a record set; it is: " + thing);
+    }
+  }
+
   public void bind(Variable variable, Value value) {
     thingMap.put(variable, value);
   }
 
   public void bind(Variable variable, Record record) {
+    thingMap.put(variable, record);
+  }
+
+  public void bind(Variable variable, Iterable<Record> record) {
     thingMap.put(variable, record);
   }
 

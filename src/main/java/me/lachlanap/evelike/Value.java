@@ -3,7 +3,7 @@ package me.lachlanap.evelike;
 /**
  * Created by lachlan on 11/02/2017.
  */
-public class Value {
+public class Value extends Expression {
   public enum Type {
     STRING, INTEGER
   }
@@ -26,6 +26,15 @@ public class Value {
     this.intValue = intValue;
   }
 
+  public int getIntValue() {
+    if (type != Type.INTEGER) throw new IllegalStateException("Not an int: " + this);
+    return intValue;
+  }
+
+  public String getStringValue() {
+    if (type != Type.STRING) throw new IllegalStateException("Not a string: " + this);
+    return stringValue;
+  }
 
   @Override
   public String toString() {

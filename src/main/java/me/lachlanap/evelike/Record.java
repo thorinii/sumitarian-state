@@ -27,6 +27,14 @@ public class Record {
     return values.hashCode();
   }
 
+  public boolean hasField(String name) {
+    return values.containsKey(name);
+  }
+
+  public Value getField(String name) {
+    return values.get(name);
+  }
+
   @Override
   public String toString() {
     StringBuilder builder = new StringBuilder("{");

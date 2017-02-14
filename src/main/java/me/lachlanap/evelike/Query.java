@@ -3,25 +3,32 @@ package me.lachlanap.evelike;
 import java.util.ArrayList;
 import java.util.List;
 
+import lombok.Getter;
+
 /**
  * Created by lachlan on 11/02/2017.
  */
-public class Query {
-  public static Builder builder(Database database) {
-    return new Builder(database);
+@Getter
+public class Query extends Expression {
+  public static Builder builder(Database set) {
+    return builder(new DatabaseReference(set));
   }
 
-  private final Database database;
+  public static Builder builder(Expression set) {
+    return new Builder(set);
+  }
+
+  private final Expression set;
   private final List<ComparisonExpression> expressions;
 
-  public Query(Database database, List<ComparisonExpression> expressions) {
-    this.database = database;
+  public Query(Expression set, List<ComparisonExpression> expressions) {
+    this.set = set;
     this.expressions = expressions;
   }
 
   @Override
   public String toString() {
-    StringBuilder builder = new StringBuilder().append(database).append(" ?{");
+    StringBuilder builder = new StringBuilder().append(set).append(" ?{");
     boolean first = true;
     for (Object expression : expressions) {
       if (!first) builder.append(" ");
@@ -49,11 +56,11 @@ public class Query {
   }
 
   public static class Builder {
-    private final Database database;
+    private final Expression expression;
     private final List<ComparisonExpression> expressions = new ArrayList<>();
 
-    public Builder(Database database) {
-      this.database = database;
+    public Builder(Expression expression) {
+      this.expression = expression;
     }
 
     public Builder greaterThan(String field, int value) {
@@ -62,7 +69,7 @@ public class Query {
     }
 
     public Query build() {
-      return new Query(database, expressions);
+      return new Query(expression, expressions);
     }
   }
 }
